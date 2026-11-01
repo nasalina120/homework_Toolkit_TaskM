@@ -1,8 +1,11 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React from 'react';
-import { TASK_VALIDATION_SCHEME } from '../../utils/validSch';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
+
+import { TASK_VALIDATION_SCHEME } from '../../utils/validSch';
 import { createTask } from '../../store/slice/taskSlice';
+import styles from './taskForm.module.sass';
 
 function TaskForm ({ createNewTask }) {
   const initialValues = {
@@ -21,18 +24,53 @@ function TaskForm ({ createNewTask }) {
       onSubmit={submitHandler}
       validationSchema={TASK_VALIDATION_SCHEME}
     >
-      <Form>
-        <Field
-          name='text'
-          type='text'
-          placeholder='Що треба зробити?'
-          autoFocus
-        />
-        <ErrorMessage name='text' component='div' />
-        <Field type='date' name='deadline' />
-        <ErrorMessage name='deadline' component='div' />
-        <button type='submit'>Додати завдання</button>
-      </Form>
+      {({ errors, touched }) => {
+        const textInputClasses = classNames(styles.inputBase, {
+          [styles.inputError]: touched.text && errors.text,
+          [styles.inputSuccess]: touched.text && !errors.text,
+        });
+
+        const deadlineInputClasses = classNames(styles.inputBase, {
+          [styles.inputError]: touched.deadline && errors.deadline,
+          [styles.inputSuccess]: touched.deadline && !errors.deadline,
+        });
+
+        return (
+          <Form className={styles.form}>
+            <div className={styles.fieldGroup}>
+              <Field
+                name='text'
+                type='text'
+                placeholder='Що треба зробити?'
+                className={textInputClasses}
+                autoFocus
+              />
+              <ErrorMessage
+                name='text'
+                component='div'
+                className={styles.errorMessage}
+              />
+            </div>
+
+            <div className={styles.fieldGroup}>
+              <Field
+                type='date'
+                name='deadline'
+                className={deadlineInputClasses}
+              />
+              <ErrorMessage
+                name='deadline'
+                component='div'
+                className={styles.errorMessage}
+              />
+            </div>
+
+            <button type='submit' className={styles.submitBtn}>
+              Додати завдання
+            </button>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }

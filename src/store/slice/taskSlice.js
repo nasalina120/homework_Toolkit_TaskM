@@ -23,9 +23,15 @@ const taskSlices = createSlice({
     createTask: (state, { payload }) => {
       state.tasks.push({ ...payload, isDone: false, id: uuidv4() });
     },
+    toggleTaskStatus: (state, { payload }) => {
+      const task = state.tasks.find(t => t.id === payload);
+      if (task) {
+        task.isDone = !task.isDone;
+      }
+    },
   },
 });
 
 export const { reducer, actions } = taskSlices;
-export const { deleteTask, createTask } = actions;
+export const { deleteTask, createTask, toggleTaskStatus } = actions;
 export default reducer;
