@@ -7,9 +7,9 @@ const initialState = {
       id: uuidv4(),
       isDone: false,
       text: 'Test',
-      deadline: '2026-11-01',
+      deadline: '2025-11-01',
     },
-    { id: uuidv4(), isDone: false, text: 'Test2', deadline: '2026-12-01' },
+    { id: uuidv4(), isDone: true, text: 'Test2', deadline: '2026-12-01' },
   ],
 };
 

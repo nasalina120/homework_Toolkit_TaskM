@@ -4,12 +4,27 @@ import { deleteTask, toggleTaskStatus } from '../../store/slice/taskSlice';
 import styles from './taskList.module.sass';
 import classNames from 'classnames';
 
+const checkIsExpired = task => {
+  if (task.isDone) return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const taskDeadline = new Date(task.deadline);
+  taskDeadline.setHours(0, 0, 0, 0);
+
+  return taskDeadline < today;
+};
+
 function TaskList ({ tasks, deleteTaskDyId, toggleTask }) {
   return (
-    <ul>
+    <ul className={styles.taskList}>
       {tasks.map(t => {
-        const pClassNames = classNames(styles.taskText, {
+        const isExpired = checkIsExpired(t);
+
+        const taskContentClassNames = classNames(styles.taskText, {
           [styles.completedText]: t.isDone,
+          [styles.expiredText]: isExpired,
         });
 
         return (
@@ -22,8 +37,8 @@ function TaskList ({ tasks, deleteTaskDyId, toggleTask }) {
                 onChange={() => toggleTask(t.id)}
               />
 
-              <p className={pClassNames}>{t.text}</p>
-              <p className={styles.taskDeadline}>{t.deadline}</p>
+              <p className={taskContentClassNames}>{t.text}</p>
+              <p className={taskContentClassNames}>{t.deadline}</p>
             </label>
             <button
               className={styles.deleteBtn}
