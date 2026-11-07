@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
+
 import { getUserThunk } from '../../store/slice/userSlice';
 import { connect } from 'react-redux';
 import styles from './headerUser.module.sass';
@@ -12,7 +14,12 @@ function HeaderUser ({ users, isFetching, error, getUser }) {
     <div className={styles.header}>
       <h1 className={styles.logo}>Todo App</h1>
       <div className={styles.widgetZone}>
-        {isFetching && <div className={styles.loader}>Loading ...</div>}
+        {isFetching && (
+          <div className={styles.loader}>
+            <ClipLoader color='#36d7b7' loading={isFetching} size={25} />
+          </div>
+        )}
+
         {error && <div className={styles.error}>!!!error!!!</div>}
 
         {!isFetching &&
