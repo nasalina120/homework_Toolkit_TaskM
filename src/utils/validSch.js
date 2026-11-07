@@ -6,7 +6,7 @@ const todayTime = () => {
   return today;
 };
 export const TASK_VALIDATION_SCHEME = yup.object({
-  text: yup.string().trim().min(2).max(50).required(),
+  title: yup.string().trim().min(2).max(50).required(),
   deadline: yup
     .date()
     .required('Вкажіть дедлайн')

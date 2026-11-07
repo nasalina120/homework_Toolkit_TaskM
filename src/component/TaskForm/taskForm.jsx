@@ -9,7 +9,7 @@ import styles from './taskForm.module.sass';
 
 function TaskForm ({ createNewTask }) {
   const initialValues = {
-    text: '',
+    title: '',
     deadline: '',
   };
 
@@ -26,8 +26,8 @@ function TaskForm ({ createNewTask }) {
     >
       {({ errors, touched }) => {
         const textInputClasses = classNames(styles.inputBase, {
-          [styles.inputError]: touched.text && errors.text,
-          [styles.inputSuccess]: touched.text && !errors.text,
+          [styles.inputError]: touched.title && errors.title,
+          [styles.inputSuccess]: touched.title && !errors.title,
         });
 
         const deadlineInputClasses = classNames(styles.inputBase, {
@@ -39,14 +39,14 @@ function TaskForm ({ createNewTask }) {
           <Form className={styles.form}>
             <div className={styles.fieldGroup}>
               <Field
-                name='text'
+                name='title'
                 type='text'
                 placeholder='Що треба зробити?'
                 className={textInputClasses}
                 autoFocus
               />
               <ErrorMessage
-                name='text'
+                name='title'
                 component='div'
                 className={styles.errorMessage}
               />
