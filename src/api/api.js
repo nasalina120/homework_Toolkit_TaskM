@@ -5,3 +5,5 @@ const axiosInstance = axios.create({
 });
 
 export const getTasks = () => axiosInstance.get('todos?_limit=5');
+
+export const getUsersAPI = () => axios.get('https://randomuser.me/api/');

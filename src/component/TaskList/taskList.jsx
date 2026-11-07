@@ -30,7 +30,7 @@ function TaskList ({
 }) {
   useEffect(() => {
     getTasks();
-  }, [getTasks]);
+  }, []);
 
   const mapTasks = t => {
     const isExpired = checkIsExpired(t);
